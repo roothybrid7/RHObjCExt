@@ -1,5 +1,6 @@
 WORKSPACE = ENV['WORKSPACE'] || 'RHObjCExt.xcworkspace'
 SDK = ENV['SDK'] || 'iphonesimulator'
+$test_success = true
 
 desc 'Validate and push podspec with versining directory'
 task :push_podspec do
@@ -7,7 +8,7 @@ task :push_podspec do
 end
 
 task :run_logic_test do
-  $test_success = system("xcodebuild \
+  $test_success &= system("xcodebuild \
     -sdk #{SDK} \
     -workspace #{WORKSPACE} \
     -scheme RHObjCExtLogicTests \
@@ -17,7 +18,7 @@ task :run_logic_test do
 end
 
 task :run_app_test do
-  $test_success = system("xcodebuild \
+  $test_success &= system("xcodebuild \
     -sdk #{SDK} \
     -workspace #{WORKSPACE} \
     -scheme RHObjCExtTests \
